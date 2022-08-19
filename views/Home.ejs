@@ -5,10 +5,11 @@
 	<h3>Welcome to Payment Gateway</h3>
 	<form action="payment" method="POST">
 	<script
-		src="//checkout.stripe.com/v2/checkout.js"
+		//src="//checkout.stripe.com/v2/checkout.js"
+		src="https://api.stripe.com/v1/checkout/sessions"
 		class="stripe-button"
 		data-key="<%= key %>"
-		data-amount="2500"
+		data-amount="300"
 		data-currency="inr"
 		data-name="Crafty Gourav"
 		data-description="Handmade Art and Craft Products"
@@ -17,3 +18,5 @@
 	</form>
 </body>
 </html>
+
+

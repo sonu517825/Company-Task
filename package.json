@@ -6,7 +6,8 @@
   "scripts": {
     "ques3": "nodemon index.js",
     "ques1": "nodemon ./Probloms/ques__1.js",
-    "ques4": "nodemon index.js"
+    "ques4": "nodemon index.js",
+    "start": "nodemon index"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "body-parser": "^1.20.0",
+    "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
     "jsonwebtoken": "^8.5.1",
