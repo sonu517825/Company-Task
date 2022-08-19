@@ -258,6 +258,16 @@ Dear Sir / Mam
 This is a sample code format. We can also make better this code 
 like use model , router , controller , views etc in seprate file.
 
+
+And for access token and refresh token every 15 min we refresh it 
+we can do this by help of cron job or cron sedule
+
+like 
+
+cron.sedule((****)=>{
+  // generate refresh token here
+})
+
 And So on 
 
 */

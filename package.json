@@ -6,16 +6,21 @@
   "scripts": {
     "ques3": "nodemon index.js",
     "ques1": "nodemon ./Probloms/ques__1.js",
-    "ques4": "nodemon ./Probloms/ques__4.js"
+    "ques4": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "moment-range": "^4.0.2",
     "mongoose": "^6.5.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "stripe": "^10.2.0"
   }
 }
