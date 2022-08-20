@@ -71,9 +71,11 @@ const user = [
 
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const axios = require("axios");
+const Publishable_key = "Publishable_key" 
+const Secret_key = "Secret_key" 
+const stripe = require("stripe")(Secret_key)
+
 
 router.get("/all_items", async (req, res, next) => {
   try {
@@ -127,103 +129,123 @@ router.get("/product_by_id", async (req, res, next) => {
     }
   }
 });
-const Moment = require("moment");
-const MomentRange = require("moment-range");
-const moment = MomentRange.extendMoment(Moment);
 
-// const config = require("../config/stripe");
-// const stripe = require("stripe")(config.secretKey);
+router.get('/start', function (req, res) {
+  res.render('Home', {
+    key: Publishable_key
+  })
+})
 
-const index = (req, res) => {
-  const fromDate = moment();
-  const toDate = moment().add(10, "years");
-  const range = moment().range(fromDate, toDate);
+router.post('/payment', async function (req, res) {
 
-  const years = Array.from(range.by("year")).map((m) => m.year());
-  const months = moment.monthsShort();
-  //res.send({fromDate , toDate , range , years , months})
-  return res.render("handlebars", { months, years });
-};
-
-const payment = async (req, res) => {
-  const token = await createToken(req.body);
-  if (token.error) {
-    req.flash("danger", token.error);
-    return res.redirect("/");
-  }
-  if (!token.id) {
-    req.flash("danger", "Payment failed.");
-    return res.redirect("/");
-  }
-
-  const charge = await createCharge(token.id, 2000);
-  if (charge && charge.status == "succeeded") {
-    req.flash("success", "Payment completed.");
-  } else {
-    req.flash("danger", "Payment failed.");
-  }
-  return res.redirect("/");
-};
-
-const createToken = async (cardData) => {
-  let token = {};
-  try {
-    token = await stripe.tokens.create({
-      card: {
-        number: cardData.cardNumber,
-        exp_month: cardData.month,
-        exp_year: cardData.year,
-        cvc: cardData.cvv,
-      },
-    });
-  } catch (error) {
-    switch (error.type) {
-      case "StripeCardError":
-        token.error = error.message;
-        break;
-      default:
-        token.error = error.message;
-        break;
+  const data = stripe.customers.create({
+    email: req.body.stripeEmail,
+    source: req.body.stripeToken,
+    name: 'Sonu Verma',
+    address: {
+      line1: 'Dhaneypur Dist. Gonda UP',
+      postal_code: '271602',
+      city: 'Gonda',
+      state: 'UP',
+      country: 'India',
     }
-  }
-  return token;
-};
+  }).then((customer) => {
+    console.log(customer, "customer")
 
-const createCharge = async (tokenId, amount) => {
-  let charge = {};
-  try {
-    charge = await stripe.charges.create({
-      amount: amount,
-      currency: "usd",
-      source: tokenId,
-      description: "My first payment",
+    return stripe.charges.create({
+      amount: 2500,	 // Charing Rs 25
+      description: 'Web Development Product',
+      currency: 'INR',
+      customer: customer.id
     });
-  } catch (error) {
-    charge.error = error.message;
-  }
-  return charge;
-};
+  })
+    .then((charge) => {
+      console.log(charge, "chagege")
+      return res.status(200).send("Success") // If no error occurs
+    })
+    .catch((err) => {
+      console.log(err, "err")
+      res.status(err.statusCode).send({ err: err.message })	 // If some error occurs
+    });
+})
 
-router.get("/index", index);
+router.get('/dhl', async function (req, res) {
+  try {
+    console.log("dhl")
+    const trackingNumber = "00340434292135100186"
+    const DHL_API_Key = API_Key 
+
+    const options = {
+      method: 'GET',
+      url: 'https://api-test.dhl.com/track/shipments',
+      params: { trackingNumber: trackingNumber },
+      headers: { 'DHL-API-Key': DHL_API_Key }
+    };
+
+    axios.request(options).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+
+
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send({ error: error.message })
+
+  }
+})
+//var axios = require("axios").default;
+
+
+router.get('/lambda_fun_place_order', async function (req, res) {
+  try {
+    const { user, product, address, payment } = body
+
+
+    // type 1
+
+    // validate user 
+    // validate product
+    // validate address
+    // validate payment
+    // send back to user
+
+
+
+
+    // type 2
+
+
+    // call a payment gateway and pass the hole body
+    // the payment gateway automatic validate all the data waya public API 
+    // like For product => google hub API
+    // for delevery => DHL API etc.
+
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send({ error: error.message })
+  }
+})
+
 module.exports = router;
 
 /*
 
+
+In Ques4 
+
+
 Dear Sir / Mam
 
-This is a sample code format. We can also make better this code 
-like use model , router , controller , views etc in seprate file.
+Here i am not code properly because here relevent data not avilable at me
+Only limited data i have
+
+like i have stripe account but not have indian payment access
+so on...
+
+But if i have a chance to do same than defnetly i can do
 
 
-And for access token and refresh token every 15 min we refresh it 
-we can do this by help of cron job or cron sedule
-
-like 
-
-cron.sedule((****)=>{
-  // generate refresh token here
-})
-
-And So on 
 
 */
