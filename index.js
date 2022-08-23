@@ -57,7 +57,7 @@ Dear Sir / Mam
 
 This code is Github : https://github.com/sonu517825/Company-Task
 
-my latest resume : https://docs.google.com/document/d/1oA38PxSUVz-XFs_k3Jw3pp2nmyN33UYO9I_rfEurlqs/edit?usp=sharing
+
 
 
 */
