@@ -98,9 +98,11 @@ const getMultiplyStep = (a, b) => {
 const a = 90; // 15 , 12
 const b = 11; //11 , 10 ;
 const result = getMultiplyStep(a, b);
-console.log("Total Steps " , result)
-console.log("Multiply = " , Number(result[result.length-1]["step8"]["sum"]));
-
+console.log("Total Steps ", result);
+console.log("Multiply = ", Number(result[result.length - 1]["step8"]["sum"]));
+//const res = Number(result[result.length - 1]["step8"]["sum"]);
+module.exports = { getMultiplyStep };
+//module.exports = res;
 /*
 
 Dear Sir / Mam

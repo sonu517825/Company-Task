@@ -9,7 +9,6 @@
     "ques4": "nodemon index.js",
     "start": "nodemon index"
   },
-  
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,6 +19,7 @@
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
     "jsonwebtoken": "^8.5.1",
+    "mocha": "^10.0.0",
     "moment": "^2.29.4",
     "moment-range": "^4.0.2",
     "mongoose": "^6.5.2",
